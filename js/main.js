@@ -19,6 +19,24 @@ function formatearNumero(n, decimales = 6) {
 
 /** Parsear expresión matemática dada como cadena a una función ejecutable */
 function parsearExpresion(expr, varName = 'x') {
+  if (typeof math !== 'undefined') {
+    try {
+      const code = math.parse(expr).compile();
+      return function(val) {
+        try {
+          const scope = {};
+          scope[varName] = val;
+          const res = code.evaluate(scope);
+          return isFinite(res) ? res : NaN;
+        } catch(e) {
+          return NaN;
+        }
+      };
+    } catch(e) {
+      console.warn('math.js parsing failed, falling back to regex parser:', e);
+    }
+  }
+
   let res = expr.trim();
   res = res.replace(/\bpi\b/gi, 'Math.PI');
   res = res.replace(/\be\b/g, 'Math.E');
@@ -487,7 +505,23 @@ function obtenerFuncionRaices() {
     const expr = document.getElementById('raices-custom').value;
     if (!expr) throw new Error('Ingrese una función personalizada');
     const f = R.parsearFuncion(expr);
-    const df = null; // usar derivada numérica
+    let df = null;
+    if (typeof math !== 'undefined') {
+      try {
+        const derivNode = math.derivative(expr, 'x');
+        const compiledDeriv = derivNode.compile();
+        df = function(x) {
+          try {
+            const res = compiledDeriv.evaluate({ x: x });
+            return isFinite(res) ? res : NaN;
+          } catch (err) {
+            return NaN;
+          }
+        };
+      } catch (e) {
+        console.warn('Fallo cálculo de derivada analítica con math.js:', e);
+      }
+    }
     return { f, df, nombre: 'Personalizada', descripcion: expr };
   }
   const funcData = window.AppData?.raices?.funciones?.find(fn => fn.id === funcId);

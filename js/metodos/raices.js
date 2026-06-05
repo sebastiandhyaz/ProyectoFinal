@@ -461,6 +461,23 @@
    * @returns {Function} Función f(x) => number.
    */
   function parsearFuncion(expresion) {
+    if (typeof math !== 'undefined') {
+      try {
+        var parsed = math.parse(expresion);
+        var compiled = parsed.compile();
+        return function (x) {
+          try {
+            var resultado = compiled.evaluate({ x: x });
+            return isFinite(resultado) ? resultado : NaN;
+          } catch (e) {
+            return NaN;
+          }
+        };
+      } catch (e) {
+        console.warn('math.js parsing failed for expression: ' + expresion + '. Falling back to vanilla parser.', e);
+      }
+    }
+
     // Preparar la expresión una sola vez
     var exprPreparada = _prepararExpresion(expresion);
 

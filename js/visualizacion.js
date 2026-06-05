@@ -130,8 +130,10 @@
     Chart.defaults.borderColor = 'rgba(51,65,85,0.5)';
     Chart.defaults.plugins.legend.labels.color = '#94a3b8';
     Chart.defaults.plugins.title.color = '#f1f5f9';
-    Chart.defaults.scale.grid = { color: 'rgba(51,65,85,0.4)' };
-    Chart.defaults.scale.ticks = { color: '#64748b' };
+    if (Chart.defaults.scale) {
+      Chart.defaults.scale.grid = { color: 'rgba(51,65,85,0.4)' };
+      Chart.defaults.scale.ticks = { color: '#64748b' };
+    }
   }
 
   // ==========================================================================

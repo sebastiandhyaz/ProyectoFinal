@@ -1,10 +1,10 @@
 # Simulación Numérica - Métodos Numéricos
 
 ## Enlace página web
-[URL de GitHub Pages aquí]
+[https://sebastiandhyaz.github.io/ProyectoFinal/](https://sebastiandhyaz.github.io/ProyectoFinal/)
 
 ## Repositorio Git
-[URL del repo aquí]
+[https://github.com/sebastiandhyaz/ProyectoFinal](https://github.com/sebastiandhyaz/ProyectoFinal)
 
 ## Integrantes
 - [Nombre completo]: Todos los módulos (A-G)

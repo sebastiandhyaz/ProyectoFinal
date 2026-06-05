@@ -63,9 +63,9 @@ window.AppData = {
       {
         id: 'reservas',
         nombre: 'Reservas Críticas',
-        expresion: '1000*Math.exp(-0.1*x) + 50*x - 500',
+        expresion: '1000*exp(-0.1*x) + 50*x - 500',
         expresionTexto: 'f(x) = 1000·e^(-0.1x) + 50x - 500',
-        derivada: '-100*Math.exp(-0.1*x) + 50',
+        derivada: '-100*exp(-0.1*x) + 50',
         intervalo: [0, 20],
         x0: 5,
         x1: 10,
@@ -76,9 +76,9 @@ window.AppData = {
       {
         id: 'precio',
         nombre: 'Equilibrio de Precio',
-        expresion: 'Math.pow(x,3) - 20*Math.pow(x,2) + 100*x - 100',
+        expresion: 'x^3 - 20*x^2 + 100*x - 100',
         expresionTexto: 'f(x) = x³ - 20x² + 100x - 100',
-        derivada: '3*Math.pow(x,2) - 40*x + 100',
+        derivada: '3*x^2 - 40*x + 100',
         intervalo: [0, 5],
         x0: 2,
         x1: 4,
@@ -89,9 +89,9 @@ window.AppData = {
       {
         id: 'demanda',
         nombre: 'Umbral de Demanda',
-        expresion: '200/(1+Math.exp(-0.5*(x-10))) - 150',
+        expresion: '200/(1+exp(-0.5*(x-10))) - 150',
         expresionTexto: 'f(x) = 200/(1+e^(-0.5(x-10))) - 150',
-        derivada: '100*Math.exp(-0.5*(x-10))/Math.pow(1+Math.exp(-0.5*(x-10)),2)',
+        derivada: '100*exp(-0.5*(x-10))/1+exp(-0.5*(x-10))^2',
         intervalo: [0, 25],
         x0: 8,
         x1: 15,
@@ -355,7 +355,7 @@ window.AppData = {
 
 /**
  * Evalúa una expresión matemática reemplazando la variable indicada por su valor.
- * @param {string} expr - Expresión JavaScript válida (ej: '1000*Math.exp(-0.1*x)')
+ * @param {string} expr - Expresión JavaScript válida (ej: '1000*exp(-0.1*x)')
  * @param {string} varName - Nombre de la variable a sustituir (ej: 'x', 't')
  * @param {number} value - Valor numérico para la variable
  * @returns {number} Resultado de la evaluación, o NaN si ocurre un error

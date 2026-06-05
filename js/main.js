@@ -89,11 +89,26 @@ function mostrarCarga(btnId) {
   btn.classList.add('btn-loading');
   btn.disabled = true;
 }
+function actualizarMatematicas() {
+  if (window.renderMathInElement) {
+    window.renderMathInElement(document.body, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false},
+        {left: '\\(', right: '\\)', display: false},
+        {left: '\\[', right: '\\]', display: true}
+      ],
+      throwOnError: false
+    });
+  }
+}
+
 function ocultarCarga(btnId) {
   const btn = document.getElementById(btnId);
   if (!btn) return;
   btn.classList.remove('btn-loading');
   btn.disabled = false;
+  setTimeout(actualizarMatematicas, 10);
 }
 
 /** Crear tabla HTML a partir de datos */
@@ -405,7 +420,7 @@ function calcularSistemas() {
       if (condDiv) {
         try {
           const cond = SL.calcularNumeroCondicion(A);
-          condDiv.innerHTML = `<div class="result-value"><strong>κ(A) ≈</strong> ${formatearNumero(cond.valor, 2)}</div>
+          condDiv.innerHTML = `<div class="result-value">$$ \kappa(A) \approx ${formatearNumero(cond.valor, 2)} $$</div>
             <div class="result-value"><em>${cond.interpretacion}</em></div>`;
         } catch (e) {
           condDiv.innerHTML = '<em>No se pudo calcular</em>';
@@ -568,8 +583,8 @@ function calcularRaices() {
       ultimosResultados.raices = resultado;
 
       // Raíz encontrada
-      document.getElementById('raices-raiz').innerHTML = `<div class="result-value" style="font-size:1.5em"><strong>x = ${formatearNumero(resultado.raiz, 8)}</strong></div>
-        <div class="result-value">f(x) = ${formatearNumero(f(resultado.raiz), 10)}</div>
+      document.getElementById('raices-raiz').innerHTML = `<div class="result-value" style="font-size:1.5em">$$ x = ${formatearNumero(resultado.raiz, 8)} $$</div>
+        <div class="result-value">$$ f(x) = ${formatearNumero(f(resultado.raiz), 10)} $$</div>
         <div class="result-value">Iteraciones: ${resultado.iteraciones}</div>`;
 
       // Orden de convergencia
@@ -1346,7 +1361,7 @@ function diagramaFases() {
 
       // Calcular si no hay resultado previo
       if (!ultimosResultados.edo) {
-        calcularEDO();
+    calcularEDO();
         return;
       }
 
@@ -1410,6 +1425,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Ejecutar todos los cálculos iniciales para mostrar resultados y gráficos inmediatamente
+    cargarEjemploSistemas();
     calcularSistemas();
     calcularRaices();
     calcularInterpolacion();

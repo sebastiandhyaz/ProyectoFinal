@@ -1,4 +1,6 @@
+const fs = require('fs');
 
+const cssContent = `
 /* ==========================================================================
    MÉTODOS NUMÉRICOS - PREMIUM UI
    Based on Claude frontend-designer template
@@ -89,8 +91,7 @@ h1 { font-size: 3rem; background: linear-gradient(135deg, #3b82f6, #14b8a6); -we
 .results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
 .result-card { background: var(--bg-secondary); padding: 1.5rem; border-radius: var(--radius-md); border: 1px solid var(--border-default); }
 .result-value { padding: 0.8rem; background: var(--bg-input); border-radius: var(--radius-sm); margin-bottom: 0.5rem; font-family: var(--font-mono); font-size: 1.1rem; color: var(--accent-teal); border-left: 3px solid var(--accent-teal); }
-.chart-container { position: relative; background: var(--bg-secondary); border: 1px solid var(--border-default); border-radius: var(--radius-md); padding: 1rem; margin-top: 2rem; height: 400px; width: 100%; } 
-.chart-container canvas { width: 100% !important; height: 100% !important; }
+.chart-container { background: var(--bg-secondary); border: 1px solid var(--border-default); border-radius: var(--radius-md); padding: 2rem; margin-top: 2rem; height: 500px; width: 100%; display: flex; justify-content: center; align-items: center; }
 .chart-container canvas { max-height: 100%; max-width: 100%; }
 
 /* Tables */
@@ -104,9 +105,6 @@ h1 { font-size: 3rem; background: linear-gradient(135deg, #3b82f6, #14b8a6); -we
 .hidden { display: none !important; }
 .alert-warning { background: rgba(245, 158, 11, 0.1); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.2); padding: 1rem; border-radius: var(--radius-md); }
 .alert-danger { background: rgba(239, 68, 68, 0.1); color: var(--accent-red); border: 1px solid rgba(239, 68, 68, 0.2); padding: 1rem; border-radius: var(--radius-md); }
-.matrix-bracket { width: 10px; border: 2px solid var(--text-secondary); border-radius: 3px; }
-.matrix-bracket.left { border-right: none; }
-.matrix-bracket.right { border-left: none; }
-input[type="range"] { -webkit-appearance: none; width: 100%; background: transparent; }
-input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; height: 16px; width: 16px; border-radius: 50%; background: var(--accent-blue); cursor: pointer; margin-top: -6px; }
-input[type="range"]::-webkit-slider-runnable-track { width: 100%; height: 4px; cursor: pointer; background: var(--border-default); border-radius: 2px; }
+`;
+fs.writeFileSync('css/styles.css', cssContent);
+console.log('CSS actualizado con el diseño premium de Claude!');

@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Simulación numérica interactiva de escenarios de abastecimiento, precios y dinámica social mediante métodos numéricos.">
+  <title>Simulación Numérica - Métodos Numéricos Aplicados</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- ============ NAVBAR ============ -->
+<nav class="navbar" id="navbar">
+  <div class="navbar-container">
+    <div class="navbar-brand">
+      <span class="navbar-logo">∑</span>
+      <span class="navbar-title">Métodos Numéricos</span>
+    </div>
+    <button class="hamburger" id="hamburger" aria-label="Menú">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="#hero" class="nav-link active">Inicio</a></li>
+      <li><a href="#sistemas" class="nav-link">Sistemas Lineales</a></li>
+      <li><a href="#raices" class="nav-link">Raíces</a></li>
+      <li><a href="#interpolacion" class="nav-link">Interpolación</a></li>
+      <li><a href="#integracion" class="nav-link">Integración</a></li>
+      <li><a href="#edo" class="nav-link">EDOs</a></li>
+      <li><a href="#conclusiones" class="nav-link">Conclusiones</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section id="hero" class="hero-section">
+  <div class="hero-content">
+    <h1 class="hero-title">Simulación Numérica de Abastecimiento, Precios y Dinámica Social</h1>
+    <p class="hero-subtitle">Aplicación interactiva de métodos numéricos para el análisis cuantitativo de escenarios de crisis</p>
+    <p class="hero-description">Este proyecto académico implementa algoritmos de resolución de sistemas lineales, búsqueda de raíces, interpolación, integración numérica y ecuaciones diferenciales ordinarias para modelar situaciones de abastecimiento, variación de precios de alimentos básicos y dinámicas sociales.</p>
+    <div class="hero-badges">
+      <span class="badge">5 Módulos</span>
+      <span class="badge">15+ Métodos</span>
+      <span class="badge">Visualización Interactiva</span>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <span>Explorar</span>
+    <div class="scroll-arrow">↓</div>
+  </div>
+</section>
+
+<!-- ============ MÓDULO 1: SISTEMAS LINEALES ============ -->
+<section id="sistemas" class="section">
+  <div class="section-container">
+    <div class="section-header">
+      <span class="module-badge">Módulo 1</span>
+      <h2 class="section-title">Sistemas de Ecuaciones Lineales</h2>
+      <p class="section-subtitle">Distribución óptima de combustible en red de transporte</p>
+    </div>
+
+    <div class="module-card">
+      <!-- Teoría -->
+      <div class="theory-section">
+        <button class="theory-toggle" data-target="teoria-sistemas">
+          <span>📘 Fundamento Teórico</span>
+          <span class="toggle-icon">▼</span>
+        </button>
+        <div class="theory-content" id="teoria-sistemas">
+          <p>Los sistemas de ecuaciones lineales <strong>Ax = b</strong> surgen de manera natural al modelar redes de distribución. En el contexto de una crisis de abastecimiento, donde se deben distribuir recursos limitados (combustible) desde múltiples plantas de almacenamiento hacia diferentes zonas geográficas, las restricciones de capacidad, demanda y flujo de red generan un sistema lineal cuya solución indica la distribución óptima.</p>
+          <p>Consideramos el caso de 3 plantas de almacenamiento que deben abastecer a 3 zonas (Norte, Centro, Sur). Los coeficientes de la matriz A representan las relaciones de capacidad entre rutas, mientras que el vector b contiene las demandas netas de cada zona. La dominancia diagonal de la matriz determina si los métodos iterativos convergerán.</p>
+          <p>Los métodos directos como la descomposición LU proporcionan la solución exacta (salvo errores de redondeo), mientras que los métodos iterativos permiten observar la convergencia paso a paso.</p>
+          <div class="formula-display">
+            <p><strong>Jacobi:</strong> x<sub>i</sub><sup>(k+1)</sup> = (1/a<sub>ii</sub>)(b<sub>i</sub> - Σ<sub>j≠i</sub> a<sub>ij</sub>x<sub>j</sub><sup>(k)</sup>)</p>
+            <p><strong>Gauss-Seidel:</strong> Usa valores actualizados inmediatamente en la misma iteración</p>
+            <p><strong>SOR:</strong> x<sub>i</sub><sup>(k+1)</sup> = (1-ω)x<sub>i</sub><sup>(k)</sup> + (ω/a<sub>ii</sub>)(...)</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controles -->
+      <div class="calc-form" id="form-sistemas">
+        <div class="form-row">
+          <div class="input-group">
+            <label for="sistemas-tamano">Tamaño del sistema</label>
+            <select id="sistemas-tamano">
+              <option value="3" selected>3×3</option>
+              <option value="4">4×4</option>
+              <option value="5">5×5</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="sistemas-metodo">Método</label>
+            <select id="sistemas-metodo">
+              <option value="jacobi">Jacobi</option>
+              <option value="gaussSeidel">Gauss-Seidel</option>
+              <option value="sor">SOR</option>
+              <option value="lu">Descomposición LU</option>
+              <option value="gradienteConjugado">Gradiente Conjugado</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="input-group">
+            <label for="sistemas-tolerancia">Tolerancia</label>
+            <input type="number" id="sistemas-tolerancia" value="0.0001" step="0.00001" min="0.0000001">
+          </div>
+          <div class="input-group">
+            <label for="sistemas-maxiter">Máx. Iteraciones</label>
+            <input type="number" id="sistemas-maxiter" value="100" min="1" max="1000">
+          </div>
+          <div class="input-group" id="sistemas-omega-group">
+            <label for="sistemas-omega">Omega (ω) para SOR</label>
+            <input type="number" id="sistemas-omega" value="1.25" step="0.05" min="0.01" max="1.99">
+          </div>
+        </div>
+
+        <!-- Entrada de Matriz -->
+        <div class="matrix-section">
+          <h4>Matriz A y Vector b</h4>
+          <div id="sistemas-matriz-container" class="matrix-input-container"></div>
+          <h4>Vector Inicial x₀</h4>
+          <div id="sistemas-x0-container" class="vector-input-container"></div>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn-primary" id="btn-sistemas-calcular">🔢 Calcular</button>
+          <button class="btn-secondary" id="btn-sistemas-ejemplo">📋 Cargar Ejemplo</button>
+          <button class="btn-danger" id="btn-sistemas-bloqueo">🚫 Simular Bloqueo</button>
+          <button class="btn-secondary btn-sm" id="btn-sistemas-exportar">📥 Exportar CSV</button>
+        </div>
+      </div>
+
+      <!-- Resultados -->
+      <div class="results-container hidden" id="resultados-sistemas">
+        <h3>Resultados</h3>
+        <div class="interpretation-box" id="sistemas-interpretacion"></div>
+        <div class="results-grid">
+          <div class="result-card">
+            <h4>Solución</h4>
+            <div id="sistemas-solucion"></div>
+          </div>
+          <div class="result-card">
+            <h4>Número de Condición</h4>
+            <div id="sistemas-condicion"></div>
+          </div>
+        </div>
+        <div class="table-wrapper">
+          <div id="sistemas-tabla"></div>
+        </div>
+        <div class="chart-container">
+          <canvas id="chart-sistemas-convergencia"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MÓDULO 2: RAÍCES ============ -->
+<section id="raices" class="section">
+  <div class="section-container">
+    <div class="section-header">
+      <span class="module-badge">Módulo 2</span>
+      <h2 class="section-title">Raíces de Ecuaciones</h2>
+      <p class="section-subtitle">Puntos críticos de reservas, precios y demanda</p>
+    </div>
+
+    <div class="module-card">
+      <div class="theory-section">
+        <button class="theory-toggle" data-target="teoria-raices">
+          <span>📘 Fundamento Teórico</span>
+          <span class="toggle-icon">▼</span>
+        </button>
+        <div class="theory-content" id="teoria-raices">
+          <p>Encontrar las raíces de una ecuación f(x) = 0 permite identificar puntos críticos: el momento en que las reservas alcanzan un nivel mínimo, el precio de equilibrio del mercado, o el umbral de demanda que supera la capacidad de abastecimiento.</p>
+          <p>El método de <strong>Bisección</strong> garantiza convergencia con orden lineal. <strong>Newton-Raphson</strong> ofrece convergencia cuadrática usando la derivada. El método de la <strong>Secante</strong> no requiere derivada explícita y tiene convergencia superlineal (orden ≈1.618).</p>
+          <div class="formula-display">
+            <p><strong>Bisección:</strong> c = (a+b)/2, evaluar signo de f(c)</p>
+            <p><strong>Newton:</strong> x<sub>n+1</sub> = x<sub>n</sub> - f(x<sub>n</sub>)/f'(x<sub>n</sub>)</p>
+            <p><strong>Secante:</strong> x<sub>n+1</sub> = x<sub>n</sub> - f(x<sub>n</sub>)·(x<sub>n</sub>-x<sub>n-1</sub>)/(f(x<sub>n</sub>)-f(x<sub>n-1</sub>))</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="calc-form" id="form-raices">
+        <div class="form-row">
+          <div class="input-group">
+            <label for="raices-funcion">Función</label>
+            <select id="raices-funcion">
+              <option value="reservas">Reservas Críticas: 1000·e^(-0.1x) + 50x - 500</option>
+              <option value="precio">Equilibrio Precio: x³ - 20x² + 100x - 100</option>
+              <option value="demanda">Umbral Demanda: 200/(1+e^(-0.5(x-10))) - 150</option>
+              <option value="custom">Función Personalizada</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row hidden" id="raices-custom-group">
+          <div class="input-group" style="grid-column:1/-1">
+            <label for="raices-custom">f(x) = (usar x como variable, ej: x^3 - 2*x + 1)</label>
+            <input type="text" id="raices-custom" placeholder="x^3 - 2*x + 1">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="input-group">
+            <label for="raices-metodo">Método</label>
+            <select id="raices-metodo">
+              <option value="biseccion">Bisección</option>
+              <option value="newton">Newton-Raphson</option>
+              <option value="secante">Secante</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="raices-tolerancia">Tolerancia</label>
+            <input type="number" id="raices-tolerancia" value="0.00001" step="0.000001">
+          </div>
+          <div class="input-group">
+            <label for="raices-maxiter">Máx. Iteraciones</label>
+            <input type="number" id="raices-maxiter" value="100" min="1">
+          </div>
+        </div>
+        <div class="form-row" id="raices-params-biseccion">
+          <div class="input-group">
+            <label for="raices-a">Intervalo a</label>
+            <input type="number" id="raices-a" value="0" step="0.1">
+          </div>
+          <div class="input-group">
+            <label for="raices-b">Intervalo b</label>
+            <input type="number" id="raices-b" value="20" step="0.1">
+          </div>
+        </div>
+        <div class="form-row hidden" id="raices-params-newton">
+          <div class="input-group">
+            <label for="raices-x0">x₀ inicial</label>
+            <input type="number" id="raices-x0" value="5" step="0.1">
+          </div>
+        </div>
+        <div class="form-row hidden" id="raices-params-secante">
+          <div class="input-group">
+            <label for="raices-x0s">x₀</label>
+            <input type="number" id="raices-x0s" value="5" step="0.1">
+          </div>
+          <div class="input-group">
+            <label for="raices-x1s">x₁</label>
+            <input type="number" id="raices-x1s" value="10" step="0.1">
+          </div>
+        </div>
+        <div class="btn-group">
+          <button class="btn-primary" id="btn-raices-calcular">🔍 Encontrar Raíz</button>
+          <button class="btn-success" id="btn-raices-comparar">📊 Comparar Métodos</button>
+          <button class="btn-secondary btn-sm" id="btn-raices-exportar">📥 Exportar CSV</button>
+        </div>
+      </div>
+
+      <div class="results-container hidden" id="resultados-raices">
+        <h3>Resultados</h3>
+        <div class="interpretation-box" id="raices-interpretacion"></div>
+        <div class="results-grid">
+          <div class="result-card"><h4>Raíz Encontrada</h4><div id="raices-raiz"></div></div>
+          <div class="result-card"><h4>Orden de Convergencia</h4><div id="raices-orden"></div></div>
+        </div>
+        <div class="table-wrapper"><div id="raices-tabla"></div></div>
+        <div class="charts-grid">
+          <div class="chart-container"><canvas id="chart-raices-funcion"></canvas></div>
+          <div class="chart-container"><canvas id="chart-raices-convergencia"></canvas></div>
+        </div>
+        <div class="hidden" id="raices-comparacion-container">
+          <h3>Comparación de Métodos</h3>
+          <div id="raices-comparacion-tabla"></div>
+          <div class="chart-container"><canvas id="chart-raices-comparacion"></canvas></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MÓDULO 3: INTERPOLACIÓN ============ -->
+<section id="interpolacion" class="section">
+  <div class="section-container">
+    <div class="section-header">
+      <span class="module-badge">Módulo 3</span>
+      <h2 class="section-title">Interpolación</h2>
+      <p class="section-subtitle">Estimación de precios de alimentos básicos</p>
+    </div>
+
+    <div class="module-card">
+      <div class="theory-section">
+        <button class="theory-toggle" data-target="teoria-interpolacion">
+          <span>📘 Fundamento Teórico</span>
+          <span class="toggle-icon">▼</span>
+        </button>
+        <div class="theory-content" id="teoria-interpolacion">
+          <p>La interpolación permite construir una función continua a partir de datos discretos de precios de alimentos. Durante una crisis, los precios se registran esporádicamente; la interpolación permite estimar precios en días intermedios.</p>
+          <p>La <strong>interpolación de Lagrange</strong> construye el polinomio interpolante usando funciones base. Las <strong>diferencias divididas de Newton</strong> utilizan una tabla recursiva eficiente. Los <strong>Splines cúbicos</strong> evitan las oscilaciones del fenómeno de Runge.</p>
+          <div class="formula-display">
+            <p><strong>Lagrange:</strong> P(x) = Σ y<sub>i</sub>·L<sub>i</sub>(x)</p>
+            <p><strong>Newton:</strong> P(x) = f[x₀] + f[x₀,x₁](x-x₀) + ...</p>
+            <p><strong>Spline cúbico:</strong> S<sub>i</sub>(x) = a<sub>i</sub> + b<sub>i</sub>(x-x<sub>i</sub>) + c<sub>i</sub>(x-x<sub>i</sub>)² + d<sub>i</sub>(x-x<sub>i</sub>)³</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="calc-form" id="form-interpolacion">
+        <div class="form-row">
+          <div class="input-group">
+            <label for="interp-producto">Producto</label>
+            <select id="interp-producto">
+              <option value="papa">Papa (Bs/kg)</option>
+              <option value="arroz">Arroz (Bs/kg)</option>
+              <option value="azucar">Azúcar (Bs/kg)</option>
+              <option value="custom">Datos Personalizados</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="interp-metodo">Método</label>
+            <select id="interp-metodo">
+              <option value="lagrange">Lagrange</option>
+              <option value="newton">Newton (Dif. Divididas)</option>
+              <option value="splines">Splines Cúbicos</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="interp-xeval">Evaluar en x (día)</label>
+            <input type="number" id="interp-xeval" value="12" step="0.5" min="0">
+          </div>
+        </div>
+
+        <div class="data-points-section">
+          <h4>Puntos de Datos <button class="btn-sm btn-secondary" id="btn-interp-agregar">+ Agregar</button></h4>
+          <div id="interp-puntos-container" class="data-points-grid"></div>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn-primary" id="btn-interp-calcular">📐 Interpolar</button>
+          <button class="btn-success" id="btn-interp-comparar">📊 Comparar Métodos</button>
+          <button class="btn-secondary" id="btn-interp-cargar">📋 Cargar Datos</button>
+          <button class="btn-secondary btn-sm" id="btn-interp-exportar">📥 Exportar CSV</button>
+        </div>
+      </div>
+
+      <div class="results-container hidden" id="resultados-interpolacion">
+        <h3>Resultados</h3>
+        <div class="interpretation-box" id="interp-interpretacion"></div>
+        <div class="results-grid">
+          <div class="result-card"><h4>Valor Interpolado</h4><div id="interp-valor"></div></div>
+          <div class="result-card"><h4>Polinomio</h4><div id="interp-polinomio" class="formula-display"></div></div>
+        </div>
+        <div class="table-wrapper"><div id="interp-tabla"></div></div>
+        <div class="chart-container"><canvas id="chart-interpolacion"></canvas></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MÓDULO 4: INTEGRACIÓN ============ -->
+<section id="integracion" class="section">
+  <div class="section-container">
+    <div class="section-header">
+      <span class="module-badge">Módulo 4</span>
+      <h2 class="section-title">Integración Numérica</h2>
+      <p class="section-subtitle">Costo acumulado y pérdida de poder adquisitivo</p>
+    </div>
+
+    <div class="module-card">
+      <div class="theory-section">
+        <button class="theory-toggle" data-target="teoria-integracion">
+          <span>📘 Fundamento Teórico</span>
+          <span class="toggle-icon">▼</span>
+        </button>
+        <div class="theory-content" id="teoria-integracion">
+          <p>La integración numérica calcula el costo acumulado de la canasta básica durante un período de crisis. Si p(t) describe el precio como función del tiempo, entonces ∫p(t)dt desde t=a hasta t=b representa el gasto total acumulado.</p>
+          <p>La <strong>regla del Trapecio</strong> aproxima con error O(h²). <strong>Simpson 1/3</strong> usa parábolas con error O(h⁴). <strong>Simpson 3/8</strong> usa polinomios de grado 3.</p>
+          <div class="formula-display">
+            <p><strong>Trapecio:</strong> ∫f(x)dx ≈ (h/2)[f(x₀) + 2f(x₁) + ... + f(x<sub>n</sub>)]</p>
+            <p><strong>Simpson 1/3:</strong> ∫f(x)dx ≈ (h/3)[f(x₀) + 4f(x₁) + 2f(x₂) + ...]</p>
+            <p><strong>Simpson 3/8:</strong> ∫f(x)dx ≈ (3h/8)[f(x₀) + 3f(x₁) + 3f(x₂) + 2f(x₃) + ...]</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="calc-form" id="form-integracion">
+        <div class="form-row">
+          <div class="input-group">
+            <label for="integ-funcion">Función</label>
+            <select id="integ-funcion">
+              <option value="precio_papa">Precio Papa: p(t) = 8 + 0.5t + 0.01t²</option>
+              <option value="canasta">Canasta Básica: c(t) = 150 + 5t + 0.1t²</option>
+              <option value="custom">Función Personalizada</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row hidden" id="integ-custom-group">
+          <div class="input-group" style="grid-column:1/-1">
+            <label for="integ-custom">f(t) = (usar t como variable)</label>
+            <input type="text" id="integ-custom" placeholder="8 + 0.5*t + 0.01*t^2">
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="input-group">
+            <label for="integ-metodo">Método</label>
+            <select id="integ-metodo">
+              <option value="trapecio">Trapecio Compuesto</option>
+              <option value="simpson13">Simpson 1/3</option>
+              <option value="simpson38">Simpson 3/8</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="integ-a">Límite inferior a</label>
+            <input type="number" id="integ-a" value="1" step="0.5">
+          </div>
+          <div class="input-group">
+            <label for="integ-b">Límite superior b</label>
+            <input type="number" id="integ-b" value="30" step="0.5">
+          </div>
+          <div class="input-group">
+            <label for="integ-n">Subintervalos n</label>
+            <input type="number" id="integ-n" value="10" min="1" max="1000">
+          </div>
+        </div>
+        <div class="btn-group">
+          <button class="btn-primary" id="btn-integ-calcular">∫ Calcular Integral</button>
+          <button class="btn-success" id="btn-integ-comparar">📊 Comparar Métodos</button>
+          <button class="btn-danger" id="btn-integ-poder">💰 Pérdida Poder Adquisitivo</button>
+          <button class="btn-secondary btn-sm" id="btn-integ-exportar">📥 Exportar CSV</button>
+        </div>
+      </div>
+
+      <div class="results-container hidden" id="resultados-integracion">
+        <h3>Resultados</h3>
+        <div class="interpretation-box" id="integ-interpretacion"></div>
+        <div class="results-grid">
+          <div class="result-card"><h4>Valor de la Integral</h4><div id="integ-valor"></div></div>
+          <div class="result-card"><h4>Error Estimado</h4><div id="integ-error"></div></div>
+        </div>
+        <div class="table-wrapper"><div id="integ-tabla"></div></div>
+        <div class="chart-container"><canvas id="chart-integracion"></canvas></div>
+        <div class="hidden" id="integ-poder-container">
+          <h3>Análisis de Poder Adquisitivo</h3>
+          <div id="integ-poder-resultado"></div>
+          <div class="chart-container"><canvas id="chart-integ-poder"></canvas></div>
+        </div>
+        <div class="hidden" id="integ-comparacion-container">
+          <h3>Comparación de Métodos</h3>
+          <div id="integ-comparacion-tabla"></div>
+          <div class="chart-container"><canvas id="chart-integ-comparacion"></canvas></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MÓDULO 5: EDOs ============ -->
+<section id="edo" class="section">
+  <div class="section-container">
+    <div class="section-header">
+      <span class="module-badge">Módulo 5</span>
+      <h2 class="section-title">Ecuaciones Diferenciales Ordinarias</h2>
+      <p class="section-subtitle">Dinámica de reservas y difusión social</p>
+    </div>
+
+    <div class="module-card">
+      <div class="theory-section">
+        <button class="theory-toggle" data-target="teoria-edo">
+          <span>📘 Fundamento Teórico</span>
+          <span class="toggle-icon">▼</span>
+        </button>
+        <div class="theory-content" id="teoria-edo">
+          <p>Las ecuaciones diferenciales ordinarias modelan la evolución temporal de sistemas dinámicos. Modelamos dos escenarios: (A) vaciado de reservas cuando el consumo supera la entrada, y (B) difusión de opinión/descontento social mediante un sistema NMD acoplado.</p>
+          <p>El <strong>método de Euler</strong> es el más simple con error O(h²). <strong>Heun</strong> usa predictor-corrector con error O(h³). <strong>RK4</strong> evalúa 4 pendientes intermedias con error O(h⁵).</p>
+          <div class="formula-display">
+            <p><strong>Euler:</strong> y<sub>n+1</sub> = y<sub>n</sub> + h·f(t<sub>n</sub>, y<sub>n</sub>)</p>
+            <p><strong>Heun:</strong> ỹ = y<sub>n</sub> + h·f(t<sub>n</sub>, y<sub>n</sub>); y<sub>n+1</sub> = y<sub>n</sub> + (h/2)[f(t<sub>n</sub>, y<sub>n</sub>) + f(t<sub>n+1</sub>, ỹ)]</p>
+            <p><strong>RK4:</strong> y<sub>n+1</sub> = y<sub>n</sub> + (h/6)(k₁ + 2k₂ + 2k₃ + k₄)</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="calc-form" id="form-edo">
+        <div class="form-row">
+          <div class="input-group">
+            <label for="edo-modelo">Modelo</label>
+            <select id="edo-modelo">
+              <option value="reservas">Vaciado de Reservas (R'(t) = E - C(t))</option>
+              <option value="social">Difusión Social NMD (Sistema 3 ecuaciones)</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="edo-metodo">Método</label>
+            <select id="edo-metodo">
+              <option value="euler">Euler</option>
+              <option value="heun">Heun (RK2)</option>
+              <option value="rk4">Runge-Kutta 4 (RK4)</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="input-group">
+            <label for="edo-h">Paso h</label>
+            <input type="number" id="edo-h" value="1" step="0.1" min="0.01">
+          </div>
+          <div class="input-group">
+            <label for="edo-tfinal">t final</label>
+            <input type="number" id="edo-tfinal" value="30" min="1">
+          </div>
+        </div>
+
+        <!-- Parámetros Reservas -->
+        <div id="edo-params-reservas" class="params-section">
+          <h4>Parámetros del Modelo de Reservas</h4>
+          <div class="form-row">
+            <div class="input-group slider-group">
+              <label for="edo-E">Entrada E: <span id="edo-E-val">100</span></label>
+              <input type="range" id="edo-E" min="0" max="200" value="100" step="5">
+            </div>
+            <div class="input-group slider-group">
+              <label for="edo-consumoBase">Consumo Base: <span id="edo-consumoBase-val">50</span></label>
+              <input type="range" id="edo-consumoBase" min="0" max="200" value="50" step="5">
+            </div>
+            <div class="input-group slider-group">
+              <label for="edo-tasaConsumo">Tasa Consumo: <span id="edo-tasaConsumo-val">5</span></label>
+              <input type="range" id="edo-tasaConsumo" min="0" max="20" value="5" step="0.5">
+            </div>
+            <div class="input-group">
+              <label for="edo-R0">R(0) = Reserva Inicial</label>
+              <input type="number" id="edo-R0" value="1000" min="0">
+            </div>
+          </div>
+        </div>
+
+        <!-- Parámetros Social -->
+        <div id="edo-params-social" class="params-section hidden">
+          <h4>Parámetros del Modelo de Difusión Social</h4>
+          <div class="form-row">
+            <div class="input-group slider-group">
+              <label for="edo-a">a (contagio): <span id="edo-a-val">0.001</span></label>
+              <input type="range" id="edo-a" min="0.0001" max="0.01" value="0.001" step="0.0001">
+            </div>
+            <div class="input-group slider-group">
+              <label for="edo-b-param">b (recuperación): <span id="edo-b-val">0.01</span></label>
+              <input type="range" id="edo-b-param" min="0.001" max="0.1" value="0.01" step="0.001">
+            </div>
+            <div class="input-group slider-group">
+              <label for="edo-c">c (moderación): <span id="edo-c-val">0.005</span></label>
+              <input type="range" id="edo-c" min="0.001" max="0.05" value="0.005" step="0.001">
+            </div>
+            <div class="input-group slider-group">
+              <label for="edo-k">k (difusión): <span id="edo-k-val">0.02</span></label>
+              <input type="range" id="edo-k" min="0.001" max="0.1" value="0.02" step="0.001">
+            </div>
+            <div class="input-group slider-group">
+              <label for="edo-r">r (olvido): <span id="edo-r-val">0.01</span></label>
+              <input type="range" id="edo-r" min="0.001" max="0.1" value="0.01" step="0.001">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="input-group">
+              <label for="edo-N0">N(0) = Neutrales</label>
+              <input type="number" id="edo-N0" value="10000" min="0">
+            </div>
+            <div class="input-group">
+              <label for="edo-M0">M(0) = Movilizados</label>
+              <input type="number" id="edo-M0" value="100" min="0">
+            </div>
+            <div class="input-group">
+              <label for="edo-D0">D(0) = Descontentos</label>
+              <input type="number" id="edo-D0" value="50" min="0">
+            </div>
+          </div>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn-primary" id="btn-edo-calcular">⚙️ Simular</button>
+          <button class="btn-success" id="btn-edo-comparar">📊 Comparar Métodos</button>
+          <button class="btn-secondary" id="btn-edo-fases">🔄 Diagrama de Fases</button>
+          <button class="btn-secondary btn-sm" id="btn-edo-exportar">📥 Exportar CSV</button>
+        </div>
+      </div>
+
+      <div class="results-container hidden" id="resultados-edo">
+        <h3>Resultados</h3>
+        <div class="interpretation-box" id="edo-interpretacion"></div>
+        <div id="edo-alerta-critico" class="alert-danger hidden"></div>
+        <div class="table-wrapper"><div id="edo-tabla"></div></div>
+        <div class="charts-grid">
+          <div class="chart-container"><canvas id="chart-edo-evolucion"></canvas></div>
+          <div class="chart-container hidden" id="chart-edo-fases-container">
+            <canvas id="chart-edo-fases"></canvas>
+          </div>
+        </div>
+        <div class="hidden" id="edo-comparacion-container">
+          <h3>Comparación de Métodos</h3>
+          <div id="edo-comparacion-tabla"></div>
+          <div class="chart-container"><canvas id="chart-edo-comparacion"></canvas></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONCLUSIONES ============ -->
+<section id="conclusiones" class="section">
+  <div class="section-container">
+    <div class="section-header">
+      <h2 class="section-title">Conclusiones y Análisis</h2>
+    </div>
+    <div class="module-card">
+      <div class="conclusion-content">
+        <h3>Análisis Comparativo de Métodos</h3>
+        <p>A lo largo de los cinco módulos implementados, se ha demostrado que la elección del método numérico adecuado depende del contexto del problema, los requisitos de precisión y los recursos computacionales disponibles.</p>
+
+        <h4>Sistemas Lineales</h4>
+        <p>Para la distribución de combustible, los métodos iterativos (Jacobi, Gauss-Seidel, SOR) son preferibles cuando el sistema es grande y disperso. Gauss-Seidel converge más rápido que Jacobi al usar valores actualizados inmediatamente. SOR con un ω óptimo puede acelerar significativamente la convergencia. La descomposición LU es la opción directa más estable.</p>
+
+        <h4>Raíces de Ecuaciones</h4>
+        <p>Bisección garantiza convergencia pero es lento (convergencia lineal). Newton-Raphson ofrece convergencia cuadrática pero requiere buena aproximación inicial. La Secante ofrece un buen equilibrio sin requerir derivada explícita.</p>
+
+        <h4>Interpolación</h4>
+        <p>Lagrange y Newton producen el mismo polinomio interpolante. Para datos dispersos, los Splines cúbicos son superiores al evitar oscilaciones artificiales y proporcionar curvas naturales y suaves.</p>
+
+        <h4>Integración Numérica</h4>
+        <p>Simpson 1/3 y 3/8 proporcionan mejor precisión que el Trapecio. La cuantificación de la pérdida de poder adquisitivo ilustra el impacto real de la inflación en crisis.</p>
+
+        <h4>Ecuaciones Diferenciales</h4>
+        <p>RK4 proporciona la mejor relación precisión-costo computacional. Euler es útil didácticamente pero puede dar predicciones imprecisas del día crítico. La diferencia es visible en el modelo NMD donde las no-linealidades amplifican errores.</p>
+
+        <h3>Limitaciones del Modelo</h3>
+        <ul>
+          <li>Los modelos son simplificaciones de la realidad y no capturan todas las variables relevantes.</li>
+          <li>Los datos de ejemplo son hipotéticos y sirven para ilustrar los métodos.</li>
+          <li>El modelo NMD no incluye factores como medios de comunicación, intervención gubernamental o fatiga social.</li>
+          <li>La interpolación con pocos puntos puede dar predicciones inexactas fuera del rango de datos.</li>
+          <li>Los parámetros del modelo deben calibrarse con datos reales para obtener predicciones fiables.</li>
+        </ul>
+
+        <h3>Mejoras Futuras</h3>
+        <ul>
+          <li>Implementar métodos adaptativos (paso variable) para EDOs.</li>
+          <li>Agregar ajuste por mínimos cuadrados además de interpolación.</li>
+          <li>Incorporar datos reales de fuentes oficiales.</li>
+          <li>Implementar métodos de optimización para calibración de parámetros.</li>
+          <li>Agregar análisis de sensibilidad paramétrica.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-grid">
+      <div class="footer-section">
+        <h4>Simulación Numérica</h4>
+        <p>Proyecto académico de Métodos Numéricos aplicados a la simulación de escenarios de crisis.</p>
+      </div>
+      <div class="footer-section">
+        <h4>Módulos</h4>
+        <ul>
+          <li><a href="#sistemas">Sistemas Lineales</a></li>
+          <li><a href="#raices">Raíces de Ecuaciones</a></li>
+          <li><a href="#interpolacion">Interpolación</a></li>
+          <li><a href="#integracion">Integración Numérica</a></li>
+          <li><a href="#edo">Ecuaciones Diferenciales</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Tecnologías</h4>
+        <ul>
+          <li>HTML5 / CSS3 / JavaScript ES6+</li>
+          <li>Chart.js para visualización</li>
+          <li>GitHub Pages para hosting</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p class="disclaimer"><em>Disclaimer: Este es un proyecto académico. Los modelos y datos presentados son simplificaciones con fines educativos y no representan análisis de situaciones reales específicas.</em></p>
+      <p>© 2025 - Proyecto Académico de Métodos Numéricos</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ SCRIPTS ============ -->
+<script src="js/data.js"></script>
+<script src="js/visualizacion.js"></script>
+<script src="js/metodos/sistemas_lineales.js"></script>
+<script src="js/metodos/raices.js"></script>
+<script src="js/metodos/interpolacion.js"></script>
+<script src="js/metodos/integracion.js"></script>
+<script src="js/metodos/edo.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

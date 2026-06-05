@@ -861,9 +861,11 @@
 
     // Agregar línea de umbral si se especificó
     if (config.umbral !== undefined && config.umbral !== null) {
+      var valUmbral = typeof config.umbral === 'object' ? config.umbral.valor : config.umbral;
+      var etiquetaUmbral = typeof config.umbral === 'object' ? (config.umbral.label || 'Umbral crítico') : ('Umbral crítico (' + config.umbral + ')');
       datasets.push({
-        label: 'Umbral crítico (' + config.umbral + ')',
-        data: new Array(etiquetasT.length).fill(config.umbral),
+        label: etiquetaUmbral,
+        data: new Array(etiquetasT.length).fill(valUmbral),
         borderColor: '#ef4444',
         borderWidth: 2,
         borderDash: [8, 4],

@@ -17,6 +17,35 @@ function formatearNumero(n, decimales = 6) {
   return Number(n).toFixed(decimales);
 }
 
+/** Parsear expresión matemática dada como cadena a una función ejecutable */
+function parsearExpresion(expr, varName = 'x') {
+  let res = expr.trim();
+  res = res.replace(/\bpi\b/gi, 'Math.PI');
+  res = res.replace(/\be\b/g, 'Math.E');
+
+  // Reemplazar ^ con Math.pow
+  let intentos = 0;
+  while (res.indexOf('^') !== -1 && intentos < 20) {
+    res = res.replace(
+      /([a-zA-Z0-9_.()]+)\^([a-zA-Z0-9_.()]+)/,
+      'Math.pow($1,$2)'
+    );
+    intentos++;
+  }
+
+  const funciones = ['exp', 'sin', 'cos', 'tan', 'log', 'sqrt', 'abs',
+                   'asin', 'acos', 'atan', 'ceil', 'floor', 'round'];
+
+  funciones.forEach(function (fn) {
+    const regex = new RegExp('(?<!Math\\.)\\b' + fn + '\\s*\\(', 'g');
+    res = res.replace(regex, 'Math.' + fn + '(');
+  });
+
+  res = res.replace(/Math\.Math\./g, 'Math.');
+  
+  return new Function(varName, 'return (' + res + ');');
+}
+
 /** Mostrar u ocultar elemento */
 function mostrar(id) {
   const el = document.getElementById(id);
@@ -316,6 +345,7 @@ function calcularSistemas() {
   mostrarCarga('btn-sistemas-calcular');
   setTimeout(() => {
     try {
+      mostrar('resultados-sistemas');
       const SL = window.SistemasLineales;
       if (!SL) throw new Error('Módulo de Sistemas Lineales no cargado');
 
@@ -471,6 +501,7 @@ function calcularRaices() {
   mostrarCarga('btn-raices-calcular');
   setTimeout(() => {
     try {
+      mostrar('resultados-raices');
       const R = window.Raices;
       if (!R) throw new Error('Módulo de Raíces no cargado');
 
@@ -564,6 +595,8 @@ function compararRaices() {
   mostrarCarga('btn-raices-comparar');
   setTimeout(() => {
     try {
+      mostrar('resultados-raices');
+      mostrar('raices-comparacion-container');
       const R = window.Raices;
       if (!R) throw new Error('Módulo no cargado');
       const { f, df } = obtenerFuncionRaices();
@@ -690,6 +723,7 @@ function calcularInterpolacion() {
   mostrarCarga('btn-interp-calcular');
   setTimeout(() => {
     try {
+      mostrar('resultados-interpolacion');
       const I = window.Interpolacion;
       if (!I) throw new Error('Módulo de Interpolación no cargado');
 
@@ -768,6 +802,7 @@ function compararInterpolacion() {
   mostrarCarga('btn-interp-comparar');
   setTimeout(() => {
     try {
+      mostrar('resultados-interpolacion');
       const I = window.Interpolacion;
       if (!I) throw new Error('Módulo no cargado');
       const xEval = parseFloat(document.getElementById('interp-xeval').value);
@@ -845,13 +880,12 @@ function obtenerFuncionIntegracion() {
   if (funcId === 'custom') {
     const expr = document.getElementById('integ-custom').value;
     if (!expr) throw new Error('Ingrese una función');
-    // Convertir ^ a Math.pow y soportar t como variable
-    let jsExpr = expr.replace(/\^/g, '**').replace(/exp\(/g, 'Math.exp(').replace(/sin\(/g, 'Math.sin(').replace(/cos\(/g, 'Math.cos(');
-    return { f: new Function('t', 'return ' + jsExpr), nombre: 'Personalizada', precioConstante: 0 };
+    const f = parsearExpresion(expr, 't');
+    return { f, nombre: 'Personalizada', precioConstante: 0 };
   }
   const funcData = window.AppData?.integracion?.funciones?.find(f => f.id === funcId);
   if (!funcData) throw new Error('Función no encontrada');
-  const f = new Function('t', 'return ' + funcData.expresion);
+  const f = parsearExpresion(funcData.expresion, 't');
   return { f, nombre: funcData.nombre, precioConstante: funcData.precioConstante, descripcion: funcData.descripcion };
 }
 
@@ -859,6 +893,7 @@ function calcularIntegracion() {
   mostrarCarga('btn-integ-calcular');
   setTimeout(() => {
     try {
+      mostrar('resultados-integracion');
       const INT = window.Integracion;
       if (!INT) throw new Error('Módulo de Integración no cargado');
 
@@ -927,6 +962,8 @@ function compararIntegracion() {
   mostrarCarga('btn-integ-comparar');
   setTimeout(() => {
     try {
+      mostrar('resultados-integracion');
+      mostrar('integ-comparacion-container');
       const INT = window.Integracion;
       if (!INT) throw new Error('Módulo no cargado');
       const { f } = obtenerFuncionIntegracion();
@@ -968,6 +1005,8 @@ function calcularPerdidaPoder() {
   mostrarCarga('btn-integ-poder');
   setTimeout(() => {
     try {
+      mostrar('resultados-integracion');
+      mostrar('integ-poder-container');
       const INT = window.Integracion;
       if (!INT) throw new Error('Módulo no cargado');
       const { f, precioConstante } = obtenerFuncionIntegracion();
@@ -1103,6 +1142,7 @@ function calcularEDO() {
   mostrarCarga('btn-edo-calcular');
   setTimeout(() => {
     try {
+      mostrar('resultados-edo');
       const E = window.EDO;
       if (!E) throw new Error('Módulo EDO no cargado');
 
@@ -1202,6 +1242,8 @@ function compararEDO() {
   mostrarCarga('btn-edo-comparar');
   setTimeout(() => {
     try {
+      mostrar('resultados-edo');
+      mostrar('edo-comparacion-container');
       const E = window.EDO;
       if (!E) throw new Error('Módulo no cargado');
       const modelo = crearModeloEDO();
@@ -1260,6 +1302,8 @@ function diagramaFases() {
   mostrarCarga('btn-edo-fases');
   setTimeout(() => {
     try {
+      mostrar('resultados-edo');
+      mostrar('chart-edo-fases-container');
       const E = window.EDO;
       const modeloId = document.getElementById('edo-modelo').value;
       if (modeloId !== 'social') {
@@ -1312,6 +1356,34 @@ document.addEventListener('DOMContentLoaded', () => {
   initInterpolacion();
   initIntegracion();
   initEDO();
+
+  // Cargar valores predeterminados y calcular al iniciar
+  try {
+    const raicesFuncion = document.getElementById('raices-funcion');
+    if (raicesFuncion) {
+      raicesFuncion.value = 'reservas';
+      raicesFuncion.dispatchEvent(new Event('change'));
+    }
+    const integFuncion = document.getElementById('integ-funcion');
+    if (integFuncion) {
+      integFuncion.value = 'precio_papa';
+      integFuncion.dispatchEvent(new Event('change'));
+    }
+    const edoModelo = document.getElementById('edo-modelo');
+    if (edoModelo) {
+      edoModelo.value = 'reservas';
+      edoModelo.dispatchEvent(new Event('change'));
+    }
+
+    // Ejecutar todos los cálculos iniciales para mostrar resultados y gráficos inmediatamente
+    calcularSistemas();
+    calcularRaices();
+    calcularInterpolacion();
+    calcularIntegracion();
+    calcularEDO();
+  } catch (e) {
+    console.error('Error al inicializar cálculos iniciales:', e);
+  }
 
   console.log('✅ Aplicación de Métodos Numéricos inicializada correctamente');
 });

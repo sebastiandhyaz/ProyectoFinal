@@ -5,14 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="Simulación numérica interactiva de escenarios de abastecimiento, precios y dinámica social mediante métodos numéricos.">
   <title>Simulación Numérica - Métodos Numéricos Aplicados</title>
-  <!-- Google Fonts -->
+  <!-- Google Fonts: Outfit (display) + JetBrains Mono (code) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <!-- CSS -->
-  <link rel="stylesheet" href="css/styles.css?v=3.0">
+  <link rel="stylesheet" href="css/styles.css?v=4.0">
 </head>
 <body>
 
@@ -41,18 +43,18 @@
 <!-- ============ HERO ============ -->
 <section id="hero" class="hero-section">
   <div class="hero-content">
-    <h1 class="hero-title">Simulación Numérica de Abastecimiento, Precios y Dinámica Social</h1>
+    <h1 class="hero-title">Simulación Numérica<br><span class="hero-gradient-text">de Crisis y Abastecimiento</span></h1>
     <p class="hero-subtitle">Aplicación interactiva de métodos numéricos para el análisis cuantitativo de escenarios de crisis</p>
-    <p class="hero-description">Este proyecto académico implementa algoritmos de resolución de sistemas lineales, búsqueda de raíces, interpolación, integración numérica y ecuaciones diferenciales ordinarias para modelar situaciones de abastecimiento, variación de precios de alimentos básicos y dinámicas sociales.</p>
+    <p class="hero-description">Implementación de algoritmos de sistemas lineales, raíces, interpolación, integración numérica y EDOs para modelar situaciones de abastecimiento, precios y dinámicas sociales.</p>
     <div class="hero-badges">
-      <span class="badge">5 Módulos</span>
-      <span class="badge">15+ Métodos</span>
-      <span class="badge">Visualización Interactiva</span>
+      <span class="badge"><i class="fas fa-cube"></i> 5 Módulos</span>
+      <span class="badge"><i class="fas fa-calculator"></i> 15+ Métodos</span>
+      <span class="badge"><i class="fas fa-chart-line"></i> Visualización Interactiva</span>
     </div>
   </div>
   <div class="scroll-indicator">
     <span>Explorar</span>
-    <div class="scroll-arrow">↓</div>
+    <div class="scroll-arrow"><i class="fas fa-chevron-down"></i></div>
   </div>
 </section>
 
@@ -69,13 +71,12 @@
       <!-- Teoría -->
       <div class="theory-section">
         <button class="theory-toggle" data-target="teoria-sistemas">
-          <span>📘 Fundamento Teórico</span>
+          <span><i class="fas fa-book"></i> Fundamento Teórico</span>
           <span class="toggle-icon">▼</span>
         </button>
         <div class="theory-content" id="teoria-sistemas">
           <p>Los sistemas de ecuaciones lineales <strong>Ax = b</strong> surgen de manera natural al modelar redes de distribución. En el contexto de una crisis de abastecimiento, donde se deben distribuir recursos limitados (combustible) desde múltiples plantas de almacenamiento hacia diferentes zonas geográficas, las restricciones de capacidad, demanda y flujo de red generan un sistema lineal cuya solución indica la distribución óptima.</p>
-          <p>Consideramos el caso de 3 plantas de almacenamiento que deben abastecer a 3 zonas (Norte, Centro, Sur). Los coeficientes de la matriz A representan las relaciones de capacidad entre rutas, mientras que el vector b contiene las demandas netas de cada zona. La dominancia diagonal de la matriz determina si los métodos iterativos convergerán.</p>
-          <p>Los métodos directos como la descomposición LU proporcionan la solución exacta (salvo errores de redondeo), mientras que los métodos iterativos permiten observar la convergencia paso a paso.</p>
+          <p>Consideramos el caso de 3 plantas de almacenamiento que deben abastecer a 3 zonas (Norte, Centro, Sur). Los coeficientes de la matriz A representan las relaciones de capacidad entre rutas, mientras que el vector b contiene las demandas netas de cada zona.</p>
           <div class="formula-display">
             <p><strong>Jacobi:</strong> x<sub>i</sub><sup>(k+1)</sup> = (1/a<sub>ii</sub>)(b<sub>i</sub> - Σ<sub>j≠i</sub> a<sub>ij</sub>x<sub>j</sub><sup>(k)</sup>)</p>
             <p><strong>Gauss-Seidel:</strong> Usa valores actualizados inmediatamente en la misma iteración</p>
@@ -123,23 +124,23 @@
 
         <!-- Entrada de Matriz -->
         <div class="matrix-section">
-          <h4>Matriz A y Vector b</h4>
+          <h4><i class="fas fa-th"></i> Matriz A y Vector b</h4>
           <div id="sistemas-matriz-container" class="matrix-input-container"></div>
-          <h4>Vector Inicial x₀</h4>
+          <h4><i class="fas fa-vector-square"></i> Vector Inicial x₀</h4>
           <div id="sistemas-x0-container" class="vector-input-container"></div>
         </div>
 
         <div class="btn-group">
-          <button class="btn-primary" id="btn-sistemas-calcular">🔢 Calcular</button>
-          <button class="btn-secondary" id="btn-sistemas-ejemplo">📋 Cargar Ejemplo</button>
-          <button class="btn-danger" id="btn-sistemas-bloqueo">🚫 Simular Bloqueo</button>
-          <button class="btn-secondary btn-sm" id="btn-sistemas-exportar">📥 Exportar CSV</button>
+          <button class="btn btn-primary" id="btn-sistemas-calcular"><i class="fas fa-play"></i> Calcular</button>
+          <button class="btn btn-secondary" id="btn-sistemas-ejemplo"><i class="fas fa-file-import"></i> Cargar Ejemplo</button>
+          <button class="btn btn-danger" id="btn-sistemas-bloqueo"><i class="fas fa-ban"></i> Simular Bloqueo</button>
+          <button class="btn btn-outline" id="btn-sistemas-exportar"><i class="fas fa-download"></i> Exportar CSV</button>
         </div>
       </div>
 
       <!-- Resultados -->
       <div class="results-container hidden" id="resultados-sistemas">
-        <h3>Resultados</h3>
+        <h3><i class="fas fa-poll"></i> Resultados</h3>
         <div class="interpretation-box" id="sistemas-interpretacion"></div>
         <div class="results-grid">
           <div class="result-card">
@@ -174,12 +175,11 @@
     <div class="module-card">
       <div class="theory-section">
         <button class="theory-toggle" data-target="teoria-raices">
-          <span>📘 Fundamento Teórico</span>
+          <span><i class="fas fa-book"></i> Fundamento Teórico</span>
           <span class="toggle-icon">▼</span>
         </button>
         <div class="theory-content" id="teoria-raices">
           <p>Encontrar las raíces de una ecuación f(x) = 0 permite identificar puntos críticos: el momento en que las reservas alcanzan un nivel mínimo, el precio de equilibrio del mercado, o el umbral de demanda que supera la capacidad de abastecimiento.</p>
-          <p>El método de <strong>Bisección</strong> garantiza convergencia con orden lineal. <strong>Newton-Raphson</strong> ofrece convergencia cuadrática usando la derivada. El método de la <strong>Secante</strong> no requiere derivada explícita y tiene convergencia superlineal (orden ≈1.618).</p>
           <div class="formula-display">
             <p><strong>Bisección:</strong> c = (a+b)/2, evaluar signo de f(c)</p>
             <p><strong>Newton:</strong> x<sub>n+1</sub> = x<sub>n</sub> - f(x<sub>n</sub>)/f'(x<sub>n</sub>)</p>
@@ -251,14 +251,14 @@
           </div>
         </div>
         <div class="btn-group">
-          <button class="btn-primary" id="btn-raices-calcular">🔍 Encontrar Raíz</button>
-          <button class="btn-success" id="btn-raices-comparar">📊 Comparar Métodos</button>
-          <button class="btn-secondary btn-sm" id="btn-raices-exportar">📥 Exportar CSV</button>
+          <button class="btn btn-primary" id="btn-raices-calcular"><i class="fas fa-search"></i> Encontrar Raíz</button>
+          <button class="btn btn-success" id="btn-raices-comparar"><i class="fas fa-chart-bar"></i> Comparar Métodos</button>
+          <button class="btn btn-outline" id="btn-raices-exportar"><i class="fas fa-download"></i> Exportar CSV</button>
         </div>
       </div>
 
       <div class="results-container hidden" id="resultados-raices">
-        <h3>Resultados</h3>
+        <h3><i class="fas fa-poll"></i> Resultados</h3>
         <div class="interpretation-box" id="raices-interpretacion"></div>
         <div class="results-grid">
           <div class="result-card"><h4>Raíz Encontrada</h4><div id="raices-raiz"></div></div>
@@ -291,12 +291,11 @@
     <div class="module-card">
       <div class="theory-section">
         <button class="theory-toggle" data-target="teoria-interpolacion">
-          <span>📘 Fundamento Teórico</span>
+          <span><i class="fas fa-book"></i> Fundamento Teórico</span>
           <span class="toggle-icon">▼</span>
         </button>
         <div class="theory-content" id="teoria-interpolacion">
           <p>La interpolación permite construir una función continua a partir de datos discretos de precios de alimentos. Durante una crisis, los precios se registran esporádicamente; la interpolación permite estimar precios en días intermedios.</p>
-          <p>La <strong>interpolación de Lagrange</strong> construye el polinomio interpolante usando funciones base. Las <strong>diferencias divididas de Newton</strong> utilizan una tabla recursiva eficiente. Los <strong>Splines cúbicos</strong> evitan las oscilaciones del fenómeno de Runge.</p>
           <div class="formula-display">
             <p><strong>Lagrange:</strong> P(x) = Σ y<sub>i</sub>·L<sub>i</sub>(x)</p>
             <p><strong>Newton:</strong> P(x) = f[x₀] + f[x₀,x₁](x-x₀) + ...</p>
@@ -331,20 +330,20 @@
         </div>
 
         <div class="data-points-section">
-          <h4>Puntos de Datos <button class="btn-sm btn-secondary" id="btn-interp-agregar">+ Agregar</button></h4>
+          <h4><i class="fas fa-table"></i> Puntos de Datos <button class="btn btn-sm btn-outline" id="btn-interp-agregar"><i class="fas fa-plus"></i> Agregar</button></h4>
           <div id="interp-puntos-container" class="data-points-grid"></div>
         </div>
 
         <div class="btn-group">
-          <button class="btn-primary" id="btn-interp-calcular">📐 Interpolar</button>
-          <button class="btn-success" id="btn-interp-comparar">📊 Comparar Métodos</button>
-          <button class="btn-secondary" id="btn-interp-cargar">📋 Cargar Datos</button>
-          <button class="btn-secondary btn-sm" id="btn-interp-exportar">📥 Exportar CSV</button>
+          <button class="btn btn-primary" id="btn-interp-calcular"><i class="fas fa-drafting-compass"></i> Interpolar</button>
+          <button class="btn btn-success" id="btn-interp-comparar"><i class="fas fa-chart-bar"></i> Comparar Métodos</button>
+          <button class="btn btn-secondary" id="btn-interp-cargar"><i class="fas fa-file-import"></i> Cargar Datos</button>
+          <button class="btn btn-outline" id="btn-interp-exportar"><i class="fas fa-download"></i> Exportar CSV</button>
         </div>
       </div>
 
       <div class="results-container hidden" id="resultados-interpolacion">
-        <h3>Resultados</h3>
+        <h3><i class="fas fa-poll"></i> Resultados</h3>
         <div class="interpretation-box" id="interp-interpretacion"></div>
         <div class="results-grid">
           <div class="result-card"><h4>Valor Interpolado</h4><div id="interp-valor"></div></div>
@@ -369,12 +368,11 @@
     <div class="module-card">
       <div class="theory-section">
         <button class="theory-toggle" data-target="teoria-integracion">
-          <span>📘 Fundamento Teórico</span>
+          <span><i class="fas fa-book"></i> Fundamento Teórico</span>
           <span class="toggle-icon">▼</span>
         </button>
         <div class="theory-content" id="teoria-integracion">
           <p>La integración numérica calcula el costo acumulado de la canasta básica durante un período de crisis. Si p(t) describe el precio como función del tiempo, entonces ∫p(t)dt desde t=a hasta t=b representa el gasto total acumulado.</p>
-          <p>La <strong>regla del Trapecio</strong> aproxima con error O(h²). <strong>Simpson 1/3</strong> usa parábolas con error O(h⁴). <strong>Simpson 3/8</strong> usa polinomios de grado 3.</p>
           <div class="formula-display">
             <p><strong>Trapecio:</strong> ∫f(x)dx ≈ (h/2)[f(x₀) + 2f(x₁) + ... + f(x<sub>n</sub>)]</p>
             <p><strong>Simpson 1/3:</strong> ∫f(x)dx ≈ (h/3)[f(x₀) + 4f(x₁) + 2f(x₂) + ...]</p>
@@ -423,15 +421,15 @@
           </div>
         </div>
         <div class="btn-group">
-          <button class="btn-primary" id="btn-integ-calcular">∫ Calcular Integral</button>
-          <button class="btn-success" id="btn-integ-comparar">📊 Comparar Métodos</button>
-          <button class="btn-danger" id="btn-integ-poder">💰 Pérdida Poder Adquisitivo</button>
-          <button class="btn-secondary btn-sm" id="btn-integ-exportar">📥 Exportar CSV</button>
+          <button class="btn btn-primary" id="btn-integ-calcular"><i class="fas fa-infinity"></i> Calcular Integral</button>
+          <button class="btn btn-success" id="btn-integ-comparar"><i class="fas fa-chart-bar"></i> Comparar Métodos</button>
+          <button class="btn btn-danger" id="btn-integ-poder"><i class="fas fa-coins"></i> Pérdida Poder Adquisitivo</button>
+          <button class="btn btn-outline" id="btn-integ-exportar"><i class="fas fa-download"></i> Exportar CSV</button>
         </div>
       </div>
 
       <div class="results-container hidden" id="resultados-integracion">
-        <h3>Resultados</h3>
+        <h3><i class="fas fa-poll"></i> Resultados</h3>
         <div class="interpretation-box" id="integ-interpretacion"></div>
         <div class="results-grid">
           <div class="result-card"><h4>Valor de la Integral</h4><div id="integ-valor"></div></div>
@@ -466,12 +464,11 @@
     <div class="module-card">
       <div class="theory-section">
         <button class="theory-toggle" data-target="teoria-edo">
-          <span>📘 Fundamento Teórico</span>
+          <span><i class="fas fa-book"></i> Fundamento Teórico</span>
           <span class="toggle-icon">▼</span>
         </button>
         <div class="theory-content" id="teoria-edo">
           <p>Las ecuaciones diferenciales ordinarias modelan la evolución temporal de sistemas dinámicos. Modelamos dos escenarios: (A) vaciado de reservas cuando el consumo supera la entrada, y (B) difusión de opinión/descontento social mediante un sistema NMD acoplado.</p>
-          <p>El <strong>método de Euler</strong> es el más simple con error O(h²). <strong>Heun</strong> usa predictor-corrector con error O(h³). <strong>RK4</strong> evalúa 4 pendientes intermedias con error O(h⁵).</p>
           <div class="formula-display">
             <p><strong>Euler:</strong> y<sub>n+1</sub> = y<sub>n</sub> + h·f(t<sub>n</sub>, y<sub>n</sub>)</p>
             <p><strong>Heun:</strong> ỹ = y<sub>n</sub> + h·f(t<sub>n</sub>, y<sub>n</sub>); y<sub>n+1</sub> = y<sub>n</sub> + (h/2)[f(t<sub>n</sub>, y<sub>n</sub>) + f(t<sub>n+1</sub>, ỹ)]</p>
@@ -511,7 +508,7 @@
 
         <!-- Parámetros Reservas -->
         <div id="edo-params-reservas" class="params-section">
-          <h4>Parámetros del Modelo de Reservas</h4>
+          <h4><i class="fas fa-sliders-h"></i> Parámetros del Modelo de Reservas</h4>
           <div class="form-row">
             <div class="input-group slider-group">
               <label for="edo-E">Entrada E: <span id="edo-E-val">100</span></label>
@@ -534,7 +531,7 @@
 
         <!-- Parámetros Social -->
         <div id="edo-params-social" class="params-section hidden">
-          <h4>Parámetros del Modelo de Difusión Social</h4>
+          <h4><i class="fas fa-sliders-h"></i> Parámetros del Modelo de Difusión Social</h4>
           <div class="form-row">
             <div class="input-group slider-group">
               <label for="edo-a">a (contagio): <span id="edo-a-val">0.001</span></label>
@@ -574,15 +571,15 @@
         </div>
 
         <div class="btn-group">
-          <button class="btn-primary" id="btn-edo-calcular">⚙️ Simular</button>
-          <button class="btn-success" id="btn-edo-comparar">📊 Comparar Métodos</button>
-          <button class="btn-secondary" id="btn-edo-fases">🔄 Diagrama de Fases</button>
-          <button class="btn-secondary btn-sm" id="btn-edo-exportar">📥 Exportar CSV</button>
+          <button class="btn btn-primary" id="btn-edo-calcular"><i class="fas fa-cogs"></i> Simular</button>
+          <button class="btn btn-success" id="btn-edo-comparar"><i class="fas fa-chart-bar"></i> Comparar Métodos</button>
+          <button class="btn btn-secondary" id="btn-edo-fases"><i class="fas fa-sync-alt"></i> Diagrama de Fases</button>
+          <button class="btn btn-outline" id="btn-edo-exportar"><i class="fas fa-download"></i> Exportar CSV</button>
         </div>
       </div>
 
       <div class="results-container hidden" id="resultados-edo">
-        <h3>Resultados</h3>
+        <h3><i class="fas fa-poll"></i> Resultados</h3>
         <div class="interpretation-box" id="edo-interpretacion"></div>
         <div id="edo-alerta-critico" class="alert-danger hidden"></div>
         <div class="table-wrapper"><div id="edo-tabla"></div></div>
@@ -614,36 +611,25 @@
         <p>A lo largo de los cinco módulos implementados, se ha demostrado que la elección del método numérico adecuado depende del contexto del problema, los requisitos de precisión y los recursos computacionales disponibles.</p>
 
         <h4>Sistemas Lineales</h4>
-        <p>Para la distribución de combustible, los métodos iterativos (Jacobi, Gauss-Seidel, SOR) son preferibles cuando el sistema es grande y disperso. Gauss-Seidel converge más rápido que Jacobi al usar valores actualizados inmediatamente. SOR con un ω óptimo puede acelerar significativamente la convergencia. La descomposición LU es la opción directa más estable.</p>
+        <p>Para la distribución de combustible, los métodos iterativos (Jacobi, Gauss-Seidel, SOR) son preferibles cuando el sistema es grande y disperso. Gauss-Seidel converge más rápido que Jacobi al usar valores actualizados inmediatamente. SOR con un ω óptimo puede acelerar significativamente la convergencia.</p>
 
         <h4>Raíces de Ecuaciones</h4>
         <p>Bisección garantiza convergencia pero es lento (convergencia lineal). Newton-Raphson ofrece convergencia cuadrática pero requiere buena aproximación inicial. La Secante ofrece un buen equilibrio sin requerir derivada explícita.</p>
 
         <h4>Interpolación</h4>
-        <p>Lagrange y Newton producen el mismo polinomio interpolante. Para datos dispersos, los Splines cúbicos son superiores al evitar oscilaciones artificiales y proporcionar curvas naturales y suaves.</p>
+        <p>Lagrange y Newton producen el mismo polinomio interpolante. Para datos dispersos, los Splines cúbicos son superiores al evitar oscilaciones artificiales.</p>
 
         <h4>Integración Numérica</h4>
-        <p>Simpson 1/3 y 3/8 proporcionan mejor precisión que el Trapecio. La cuantificación de la pérdida de poder adquisitivo ilustra el impacto real de la inflación en crisis.</p>
+        <p>Simpson 1/3 y 3/8 proporcionan mejor precisión que el Trapecio para funciones suaves.</p>
 
         <h4>Ecuaciones Diferenciales</h4>
-        <p>RK4 proporciona la mejor relación precisión-costo computacional. Euler es útil didácticamente pero puede dar predicciones imprecisas del día crítico. La diferencia es visible en el modelo NMD donde las no-linealidades amplifican errores.</p>
+        <p>RK4 proporciona la mejor relación precisión-costo computacional. Euler es útil didácticamente pero puede dar predicciones imprecisas del día crítico.</p>
 
         <h3>Limitaciones del Modelo</h3>
         <ul>
-          <li>Los modelos son simplificaciones de la realidad y no capturan todas las variables relevantes.</li>
+          <li>Los modelos son simplificaciones de la realidad.</li>
           <li>Los datos de ejemplo son hipotéticos y sirven para ilustrar los métodos.</li>
-          <li>El modelo NMD no incluye factores como medios de comunicación, intervención gubernamental o fatiga social.</li>
-          <li>La interpolación con pocos puntos puede dar predicciones inexactas fuera del rango de datos.</li>
-          <li>Los parámetros del modelo deben calibrarse con datos reales para obtener predicciones fiables.</li>
-        </ul>
-
-        <h3>Mejoras Futuras</h3>
-        <ul>
-          <li>Implementar métodos adaptativos (paso variable) para EDOs.</li>
-          <li>Agregar ajuste por mínimos cuadrados además de interpolación.</li>
-          <li>Incorporar datos reales de fuentes oficiales.</li>
-          <li>Implementar métodos de optimización para calibración de parámetros.</li>
-          <li>Agregar análisis de sensibilidad paramétrica.</li>
+          <li>Los parámetros deben calibrarse con datos reales para obtener predicciones fiables.</li>
         </ul>
       </div>
     </div>
@@ -678,7 +664,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <p class="disclaimer"><em>Disclaimer: Este es un proyecto académico. Los modelos y datos presentados son simplificaciones con fines educativos y no representan análisis de situaciones reales específicas.</em></p>
+      <p class="disclaimer"><em>Disclaimer: Este es un proyecto académico. Los modelos y datos presentados son simplificaciones con fines educativos.</em></p>
       <p>© 2025 - Proyecto Académico de Métodos Numéricos</p>
     </div>
   </div>
